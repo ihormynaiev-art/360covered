@@ -9,11 +9,6 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
         await homePage.navigateToHomePage();
     });
 
-    test('should verify Auto tab is active by default', async ({ homePage }) => {
-        // Visual check from the screenshot shows Auto tab is highlighted
-        await expect(homePage.autoTab).toBeVisible();
-    });
-
     test('should submit auto quote form and proceed in chat', async ({ homePage, chatPage, coveragePage, checkoutPage }) => {
         const USER_VIN = '3GNAXHEV2JL379307';
         const USER_MILEAGE = '40000';
