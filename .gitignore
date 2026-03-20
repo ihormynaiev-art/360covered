@@ -1,0 +1,25 @@
+node_modules/
+dist/
+
+# Environment
+config/.env.*
+!config/.env.example
+
+# Test results and reports
+allure-results/
+allure-report/
+playwright-report/
+test-results/
+
+# Storage states (generated at runtime)
+storage-states/*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
