@@ -52,17 +52,35 @@ export class CheckoutPage extends BasePage {
         country_or_region_text: string,
         billing_zip_code_text: string
     }): Promise<void> {
-        // Note: Payment fields are often inside iframes. Using getByLabel as a starting point.
-        await this.page.getByLabel('Card number').fill(payment_method_details_input.card_number_text);
-        await this.page.getByLabel('Expiration date').fill(payment_method_details_input.expiration_date_text);
-        await this.page.getByLabel('CVC').fill(payment_method_details_input.cvc_code_text);
-        await this.page.getByLabel('Cardholder name').fill(payment_method_details_input.cardholder_name_text);
-        
-        // Country selection might be a dropdown or an input
-        const country_dropdown_locator = this.page.getByLabel('Country or region');
-        await country_dropdown_locator.fill(payment_method_details_input.country_or_region_text);
-        
-        await this.page.getByLabel('ZIP Code').last().fill(payment_method_details_input.billing_zip_code_text);
+        // Find and fill Card number
+        const card_number_locator = this.page.getByLabel(/Card number/i);
+        await card_number_locator.waitFor({ state: 'visible', timeout: 10000 });
+        await card_number_locator.fill(payment_method_details_input.card_number_text);
+
+        // Find and fill Expiration date (based on provided HTML: aria-label="Expiration", id="cardExpiry")
+        const expiration_date_locator = this.page.locator('#cardExpiry').or(this.page.getByLabel(/^Expiration$/i));
+        await expiration_date_locator.waitFor({ state: 'visible', timeout: 5000 });
+        await expiration_date_locator.fill(payment_method_details_input.expiration_date_text);
+
+        // Find and fill CVC
+        const cvc_locator = this.page.locator('#cardCvc').or(this.page.getByLabel(/^CVC$/i));
+        await cvc_locator.waitFor({ state: 'visible', timeout: 5000 });
+        await cvc_locator.fill(payment_method_details_input.cvc_code_text);
+
+        // Find and fill Cardholder name
+        const cardholder_name_locator = this.page.locator('#billingName').or(this.page.getByLabel(/Cardholder name/i));
+        await cardholder_name_locator.waitFor({ state: 'visible', timeout: 5000 });
+        await cardholder_name_locator.fill(payment_method_details_input.cardholder_name_text);
+
+        // Find and select Country or region (it's a dropdown)
+        const country_dropdown_locator = this.page.locator('#billingCountry').or(this.page.getByLabel(/Country or region/i));
+        await country_dropdown_locator.waitFor({ state: 'visible', timeout: 5000 });
+        await country_dropdown_locator.selectOption({ label: payment_method_details_input.country_or_region_text });
+
+        // Find and fill Billing ZIP Code
+        const billing_zip_code_locator = this.page.locator('#billingPostalCode').or(this.page.getByLabel(/ZIP Code/i).last());
+        await billing_zip_code_locator.waitFor({ state: 'visible', timeout: 5000 });
+        await billing_zip_code_locator.fill(payment_method_details_input.billing_zip_code_text);
     }
 
     /**
