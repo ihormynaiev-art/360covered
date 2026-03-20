@@ -42,4 +42,16 @@ export class CoveragePage extends BasePage {
         const planDetailsModal = this.page.getByRole('dialog');
         await expect(planDetailsModal).toBeVisible({ timeout: 15000 });
     }
+
+    /**
+     * Clicks the "Select This Plan" button in the open modal.
+     */
+    async selectPlan(): Promise<void> {
+        const selectPlanButton = this.page.getByRole('button', { name: 'Select This Plan' });
+        await selectPlanButton.waitFor({ state: 'visible', timeout: 10000 });
+        await selectPlanButton.click();
+        
+        // Wait for potential navigation or modal close
+        await this.page.waitForLoadState('networkidle');
+    }
 }

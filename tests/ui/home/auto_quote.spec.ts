@@ -14,7 +14,7 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
         await expect(homePage.autoTab).toBeVisible();
     });
 
-    test('should submit auto quote form and proceed in chat', async ({ homePage, chatPage, coveragePage }) => {
+    test('should submit auto quote form and proceed in chat', async ({ homePage, chatPage, coveragePage, checkoutPage }) => {
         const USER_VIN = '3GNAXHEV2JL379307';
         const USER_MILEAGE = '40000';
         const USER_STATE = 'FL';
@@ -29,5 +29,11 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
 
         // Select the POWERTRAIN plan from Provider A
         await coveragePage.viewPlanDetails('POWERTRAIN', 'Provider A');
+
+        // Click "Select This Plan" in the modal
+        await coveragePage.selectPlan();
+
+        // Final step: Continue to checkout
+        await checkoutPage.continueToCheckout();
     });
 });
