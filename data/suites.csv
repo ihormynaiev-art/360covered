@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","638","should open Playwright documentation page","chromium","2026-03-20","passed","2026-03-20","Example UI Tests @ui","ui/auth/login.spec.ts","",""
+"","224","GET /users should return a response","chromium","2026-03-20","passed","2026-03-20","Users API @api","api/users.spec.ts","",""
+"","741","should navigate to docs section","chromium","2026-03-20","passed","2026-03-20","Example UI Tests @ui","ui/auth/login.spec.ts","",""
+"","840","should load Google homepage","chromium","2026-03-20","passed","2026-03-20","Example Navigation Tests @ui @smoke","ui/checkout/checkout.spec.ts","",""
+"","70","POST /users should create a new user","chromium","2026-03-20","passed","2026-03-20","Users API @api","api/users.spec.ts","",""
+"","46","GET /users/1 should return a single user","chromium","2026-03-20","passed","2026-03-20","Users API @api","api/users.spec.ts","",""
