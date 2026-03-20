@@ -1,4 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","94824","should submit auto quote form and proceed in chat","chromium","2026-03-20","broken","2026-03-20","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
-"","1564","test","chromium","2026-03-20","passed","2026-03-20","","test-1.spec.ts","",""
-"","5736","should verify Auto tab is active by default","chromium","2026-03-20","failed","2026-03-20","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
+"","1264","test","chromium","2026-03-20","passed","2026-03-20","","test-1.spec.ts","",""
+"","94546","should submit auto quote form and proceed in chat","chromium","2026-03-20","broken","2026-03-20","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
+"","5647","should verify Auto tab is active by default","chromium","2026-03-20","failed","2026-03-20","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
