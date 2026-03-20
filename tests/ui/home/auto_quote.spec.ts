@@ -50,5 +50,15 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
 
         // Click "Complete Purchase"
         await checkoutPage.completePurchase();
+
+        // Fill payment information
+        await checkoutPage.fill_payment_method_details({
+            card_number_text: '4242 4242 4242 4242',
+            expiration_date_text: '12 / 30',
+            cvc_code_text: '111',
+            cardholder_name_text: 'TestQA',
+            country_or_region_text: 'United States',
+            billing_zip_code_text: '00000'
+        });
     });
 });
