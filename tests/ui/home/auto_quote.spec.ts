@@ -60,5 +60,11 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
             country_or_region_text: 'United States',
             billing_zip_code_text: '00000'
         });
+
+        // Click final confirm or pay button
+        await checkoutPage.click_confirm_payment_button();
+
+        // Verify successful purchase
+        await checkoutPage.verify_successful_purchase_confirmation();
     });
 });
