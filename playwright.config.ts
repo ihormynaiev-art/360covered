@@ -33,7 +33,6 @@ export default defineConfig({
                 ...devices['Desktop Chrome'],
                 storageState: 'storage-states/user-state.json',
             },
-            dependencies: ['setup'],
         },
         {
             name: 'firefox',
@@ -41,7 +40,6 @@ export default defineConfig({
                 ...devices['Desktop Firefox'],
                 storageState: 'storage-states/user-state.json',
             },
-            dependencies: ['setup'],
         },
         {
             name: 'webkit',
@@ -49,7 +47,6 @@ export default defineConfig({
                 ...devices['Desktop Safari'],
                 storageState: 'storage-states/user-state.json',
             },
-            dependencies: ['setup'],
         },
     ],
 });
