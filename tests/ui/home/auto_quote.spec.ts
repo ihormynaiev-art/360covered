@@ -35,5 +35,20 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
 
         // Final step: Continue to checkout
         await checkoutPage.continueToCheckout();
+
+        // Fill customer information
+        await checkoutPage.fillCustomerInformation({
+            firstName: 'Test',
+            lastName: 'QA',
+            email: 'ihor.mynaiev@greenice.net',
+            phone: '01234567890',
+            streetAddress: '123 Main St',
+            city: 'Miami',
+            state: 'FL',
+            zipCode: '33101'
+        });
+
+        // Click "Complete Purchase"
+        await checkoutPage.completePurchase();
     });
 });
