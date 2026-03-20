@@ -27,7 +27,7 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
         // Interact with the second chat question (Usage)
         await chatPage.answerChatQuestion('personal use?', 'Personal');
 
-        // Select the POWERTRAIN plan
-        await coveragePage.viewPlanDetails('POWERTRAIN');
+        // Select the POWERTRAIN plan from Provider A
+        await coveragePage.viewPlanDetails('POWERTRAIN', 'Provider A');
     });
 });
