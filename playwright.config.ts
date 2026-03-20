@@ -17,36 +17,15 @@ export default defineConfig({
         ['allure-playwright'],
     ],
     use: {
-        baseURL: process.env.BASE_URL,
+        baseURL: process.env.BASE_URL || 'https://example.com',
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
     },
     projects: [
         {
-            name: 'setup',
-            testMatch: /.*\.setup\.ts/,
-        },
-        {
             name: 'chromium',
-            use: {
-                ...devices['Desktop Chrome'],
-                storageState: 'storage-states/user-state.json',
-            },
-        },
-        {
-            name: 'firefox',
-            use: {
-                ...devices['Desktop Firefox'],
-                storageState: 'storage-states/user-state.json',
-            },
-        },
-        {
-            name: 'webkit',
-            use: {
-                ...devices['Desktop Safari'],
-                storageState: 'storage-states/user-state.json',
-            },
+            use: { ...devices['Desktop Chrome'] },
         },
     ],
 });

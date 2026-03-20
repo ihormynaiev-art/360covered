@@ -13,11 +13,11 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@pages/*": ["pages/*"],
-      "@api/*": ["api/*"],
-      "@fixtures/*": ["fixtures/*"],
-      "@utils/*": ["utils/*"],
-      "@test-data/*": ["test-data/*"]
+      "pages/*": ["pages/*"],
+      "api/*": ["api/*"],
+      "fixtures/*": ["fixtures/*"],
+      "utils/*": ["utils/*"],
+      "test-data/*": ["test-data/*"]
     }
   },
   "include": [

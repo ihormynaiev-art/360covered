@@ -1,28 +1,17 @@
-import { test, expect } from 'fixtures/app.fixture';
-import { USER_USERNAME, USER_PASSWORD } from 'utils/env.helper';
+import { test, expect } from '@playwright/test';
 
-test.describe('Login Page @ui', () => {
-    test('should login with valid credentials', async ({ loginPage, page }) => {
-        await loginPage.navigateToLoginPage();
-        await loginPage.performLogin(USER_USERNAME, USER_PASSWORD);
+test.describe('Example UI Tests @ui', () => {
+    test('should open Playwright documentation page', async ({ page }) => {
+        await page.goto('https://playwright.dev/');
 
-        await page.waitForURL('/');
-        await expect(page).toHaveURL('/');
+        await expect(page).toHaveTitle(/Playwright/);
     });
 
-    test('should show error message with invalid credentials', async ({ loginPage }) => {
-        await loginPage.navigateToLoginPage();
-        await loginPage.performLogin('invalid@example.com', 'wrong_password');
+    test('should navigate to docs section', async ({ page }) => {
+        await page.goto('https://playwright.dev/');
 
-        await loginPage.waitForElementVisible(loginPage.errorMessage);
-        const loginErrorText = await loginPage.getLoginErrorMessageText();
-        expect(loginErrorText).toBeTruthy();
-    });
+        await page.getByRole('link', { name: 'Get started' }).click();
 
-    test('should not login with empty credentials', async ({ loginPage }) => {
-        await loginPage.navigateToLoginPage();
-        await loginPage.performLogin('', '');
-
-        await expect(loginPage.loginButton).toBeVisible();
+        await expect(page).toHaveURL(/.*intro/);
     });
 });

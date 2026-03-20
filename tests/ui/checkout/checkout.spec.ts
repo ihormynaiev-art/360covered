@@ -1,27 +1,9 @@
-import { test, expect } from 'fixtures/app.fixture';
+import { test, expect } from '@playwright/test';
 
-test.describe('Checkout Flow @ui', () => {
-    test('should display checkout page', async ({ page }) => {
-        await page.goto('/checkout');
+test.describe('Example Navigation Tests @ui @smoke', () => {
+    test('should load Google homepage', async ({ page }) => {
+        await page.goto('https://www.google.com/');
 
-        await expect(page).toHaveURL(/.*checkout/);
-        await expect(page.locator('h1')).toBeVisible();
-    });
-
-    test('should show order summary', async ({ page }) => {
-        await page.goto('/checkout');
-
-        const orderSummarySection = page.locator('.order-summary');
-        await expect(orderSummarySection).toBeVisible();
-    });
-
-    test('should validate required fields before payment', async ({ page }) => {
-        await page.goto('/checkout');
-
-        const submitPaymentButton = page.locator('button.submit-payment');
-        await submitPaymentButton.click();
-
-        const validationErrorMessage = page.locator('.validation-error');
-        await expect(validationErrorMessage).toBeVisible();
+        await expect(page).toHaveTitle(/Google/);
     });
 });

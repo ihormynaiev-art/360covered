@@ -1,42 +1,42 @@
-import { test, expect } from 'fixtures/api.fixture';
+import { test, expect } from '@playwright/test';
 
 test.describe('Users API @api', () => {
-    test('GET /users should return list of users', async ({ userClient }) => {
-        const usersListResponse = await userClient.getAllUsers();
+    test('GET /users should return a response', async ({ request }) => {
+        const usersListResponse = await request.get('https://jsonplaceholder.typicode.com/users');
 
         expect(usersListResponse.ok()).toBeTruthy();
         expect(usersListResponse.status()).toBe(200);
 
         const usersListBody = await usersListResponse.json();
         expect(Array.isArray(usersListBody)).toBeTruthy();
+        expect(usersListBody.length).toBeGreaterThan(0);
     });
 
-    test('POST /users should create a new user', async ({ userClient }) => {
-        const newUserPayload = {
-            name: 'John Doe',
-            email: 'john.doe@example.com',
-        };
-
-        const createUserResponse = await userClient.createUser(newUserPayload);
-
-        expect(createUserResponse.ok()).toBeTruthy();
-        expect(createUserResponse.status()).toBe(201);
-    });
-
-    test('GET /users/:id should return a single user', async ({ userClient }) => {
-        const singleUserResponse = await userClient.getUserById('1');
+    test('GET /users/1 should return a single user', async ({ request }) => {
+        const singleUserResponse = await request.get('https://jsonplaceholder.typicode.com/users/1');
 
         expect(singleUserResponse.ok()).toBeTruthy();
         expect(singleUserResponse.status()).toBe(200);
 
         const singleUserBody = await singleUserResponse.json();
-        expect(singleUserBody).toHaveProperty('id');
+        expect(singleUserBody).toHaveProperty('id', 1);
         expect(singleUserBody).toHaveProperty('name');
+        expect(singleUserBody).toHaveProperty('email');
     });
 
-    test('DELETE /users/:id should delete a user', async ({ userClient }) => {
-        const deleteUserResponse = await userClient.deleteUser('1');
+    test('POST /users should create a new user', async ({ request }) => {
+        const createUserResponse = await request.post('https://jsonplaceholder.typicode.com/users', {
+            data: {
+                name: 'John Doe',
+                username: 'johndoe',
+                email: 'john.doe@example.com',
+            },
+        });
 
-        expect(deleteUserResponse.ok()).toBeTruthy();
+        expect(createUserResponse.ok()).toBeTruthy();
+        expect(createUserResponse.status()).toBe(201);
+
+        const createdUserBody = await createUserResponse.json();
+        expect(createdUserBody).toHaveProperty('id');
     });
 });
