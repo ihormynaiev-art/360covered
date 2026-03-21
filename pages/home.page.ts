@@ -2,72 +2,70 @@ import { Page, Locator } from '@playwright/test';
 import { BasePage } from 'pages/base.page';
 
 export class HomePage extends BasePage {
-    readonly autoTab: Locator;
-    readonly powersportsTab: Locator;
-    readonly golfCartsTab: Locator;
-    readonly vinInput: Locator;
-    readonly mileageInput: Locator;
-    readonly stateDropdown: Locator;
-    readonly getInstantQuoteButton: Locator;
-    readonly startNewQuoteButton: Locator;
+    readonly auto_quote_tab_button_locator: Locator;
+    readonly powersports_quote_tab_button_locator: Locator;
+    readonly golf_carts_quote_tab_button_locator: Locator;
+    readonly vehicle_identification_number_input_locator: Locator;
+    readonly vehicle_mileage_input_locator: Locator;
+    readonly vehicle_state_dropdown_locator: Locator;
+    readonly get_instant_quote_submit_button_locator: Locator;
+    readonly start_new_quote_modal_button_locator: Locator;
 
     constructor(page: Page) {
         super(page);
-        const searchContainer = page.locator('#search-filters');
-        this.autoTab = searchContainer.getByRole('button', { name: 'Auto' });
-        this.powersportsTab = searchContainer.getByRole('button', { name: 'Powersports' });
-        this.golfCartsTab = searchContainer.getByRole('button', { name: 'Golf Carts' });
-        this.vinInput = searchContainer.getByRole('textbox', { name: 'VIN' });
-        this.mileageInput = searchContainer.getByRole('textbox', { name: 'Mileage' });
-        this.stateDropdown = searchContainer.getByRole('combobox');
-        this.getInstantQuoteButton = searchContainer.getByRole('button', { name: 'Get Instant Quote' });
-        this.startNewQuoteButton = page.getByRole('button', { name: 'Start New Quote' });
+        this.auto_quote_tab_button_locator = page.getByRole('button', { name: 'Auto' });
+        this.powersports_quote_tab_button_locator = page.getByRole('button', { name: 'Powersports' });
+        this.golf_carts_quote_tab_button_locator = page.getByRole('button', { name: 'Golf Carts' });
+        this.vehicle_identification_number_input_locator = page.getByRole('textbox', { name: 'VIN' });
+        this.vehicle_mileage_input_locator = page.getByRole('textbox', { name: 'Mileage' });
+        this.vehicle_state_dropdown_locator = page.getByRole('combobox');
+        this.get_instant_quote_submit_button_locator = page.getByRole('button', { name: 'Get Instant Quote' });
+        this.start_new_quote_modal_button_locator = page.getByRole('button', { name: 'Start New Quote' });
     }
 
     async navigate_to_home_page(): Promise<void> {
         await this.navigate_to('/');
+
+        const primary_search_form_container_locator = this.page.locator('#search-filters');
+        const secondary_form_indicator_locator = this.vehicle_identification_number_input_locator;
         
-        // Wait for the main search container to be visible as a signal the page is ready
-        // We use OR logic to be more resilient (either the ID or any specific field)
-        const search_filters_container_locator = this.page.locator('#search-filters').or(this.vinInput);
-        
+        const home_page_readiness_indicator_locator = primary_search_form_container_locator.or(secondary_form_indicator_locator);
+
         try {
-            await search_filters_container_locator.first().waitFor({ state: 'visible', timeout: 30000 });
-        } catch (error_object) {
-            const current_page_html_content = await this.page.content();
-            console.error(`ERROR: Element "#search-filters" or VIN input not found! Current URL: ${this.page.url()}`);
-            console.error(`Page content preview (first 2048 chars): ${current_page_html_content.substring(0, 2048)}`);
-            throw new Error(`Home page search form not loaded properly at ${this.page.url()}. Check CI logging or screenshots.`);
+            await home_page_readiness_indicator_locator.first().waitFor({ state: 'visible', timeout: 30000 });
+        } catch (navigation_timeout_error) {
+            const failure_page_url_string = this.page.url();
+            const failure_page_html_content = await this.page.content();
+            
+            console.error(`ERROR: Home page form failed to load at ${failure_page_url_string}`);
+            console.error(`Page HTML snippet: ${failure_page_html_content.substring(0, 1024)}`);
+            const navigation_timeout_error_message_string = navigation_timeout_error instanceof Error ? navigation_timeout_error.message : String(navigation_timeout_error);
+            throw new Error(`Home page form visibility timeout. URL: ${failure_page_url_string}. Original Error: ${navigation_timeout_error_message_string}`);
         }
     }
 
     async fill_auto_quote_form_with_details(vin_number_string: string, vehicle_mileage_string: string, state_name_string: string): Promise<void> {
-        // Ensure the form is ready and can be filled
-        await this.vinInput.waitFor({ state: 'visible', timeout: 30000 });
-        await this.fill_input_locator(this.vinInput, vin_number_string);
-        await this.fill_input_locator(this.mileageInput, vehicle_mileage_string);
+        await this.vehicle_identification_number_input_locator.waitFor({ state: 'visible', timeout: 30000 });
         
-        await this.stateDropdown.click();
-        // Updated state selection logic to be simpler and more direct
+        await this.fill_input_locator(this.vehicle_identification_number_input_locator, vin_number_string);
+        await this.fill_input_locator(this.vehicle_mileage_input_locator, vehicle_mileage_string);
+
+        await this.vehicle_state_dropdown_locator.click();
+        
         const state_selection_option_locator = this.page.getByRole('option', { name: state_name_string, exact: false }).or(
             this.page.locator('div').filter({ hasText: new RegExp(`^${state_name_string}$`) })
         ).first();
-        
-        await state_selection_option_locator.click();
-        
-        await this.click_element_locator(this.getInstantQuoteButton);
 
-        // Robust handling of the 'Welcome Back' modal
+        await state_selection_option_locator.click();
+
+        await this.click_element_locator(this.get_instant_quote_submit_button_locator);
+
         try {
-            // Wait up to 10 seconds for the modal to appear
-            await this.startNewQuoteButton.waitFor({ state: 'visible', timeout: 10000 });
-            await this.click_element_locator(this.startNewQuoteButton);
-            
-            // After clicking Start New Quote, we might need a small pause for navigation to trigger
+            await this.start_new_quote_modal_button_locator.waitFor({ state: 'visible', timeout: 10000 });
+            await this.click_element_locator(this.start_new_quote_modal_button_locator);
             await this.page.waitForLoadState('networkidle');
-        } catch (error) {
-            // If the modal doesn't appear within 10s, we assume it's a new VIN and continue
-            console.log('Modal "Welcome Back" did not appear, proceeding with the flow.');
+        } catch (modal_not_found_error) {
+            console.log('Welcome modal was not displayed, continuing flow.');
         }
     }
 }
