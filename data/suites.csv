@@ -1,4 +1,4 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","90108","should submit auto quote form and proceed in chat","firefox","2026-03-21","broken","2026-03-21","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
-"","94820","should submit auto quote form and proceed in chat","webkit","2026-03-21","broken","2026-03-21","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
-"","94531","should submit auto quote form and proceed in chat","chromium","2026-03-21","broken","2026-03-21","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
+"","31978","should submit auto quote form and proceed in chat","chromium","2026-03-21","failed","2026-03-21","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
+"","32271","should submit auto quote form and proceed in chat","webkit","2026-03-21","failed","2026-03-21","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
+"","31021","should submit auto quote form and proceed in chat","firefox","2026-03-21","failed","2026-03-21","Home Page - Auto Quote Form @ui @smoke","ui/home/auto_quote.spec.ts","",""
