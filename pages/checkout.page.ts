@@ -98,7 +98,7 @@ export class CheckoutPage extends BasePage {
      * Verifies that the successful purchase confirmation message is visible.
      */
     async verify_successful_purchase_confirmation(): Promise<void> {
-        const success_title_locator = this.page.getByText("You're Covered!", { exact: true });
+        const success_title_locator = this.page.getByText(/You[''\u2019]re Covered!/);
         const success_description_locator = this.page.getByText('Your vehicle protection is now active');
         
         await success_title_locator.waitFor({ state: 'visible', timeout: 30000 });
