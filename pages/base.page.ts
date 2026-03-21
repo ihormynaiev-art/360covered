@@ -8,8 +8,22 @@ export class BasePage {
     }
 
     async navigate_to(relative_path_string: string): Promise<void> {
-        await this.page.goto(relative_path_string);
-        // Ensure the page is somewhat settled before continuing
+        const page_navigation_response = await this.page.goto(relative_path_string);
+        
+        if (!page_navigation_response) {
+            throw new Error(`Navigation to ${relative_path_string} failed: No response received from server.`);
+        }
+        
+        const response_status_number = page_navigation_response.status();
+        const current_page_url_string = this.page.url();
+        
+        console.log(`Navigated to: ${current_page_url_string} | Status: ${response_status_number}`);
+
+        if (response_status_number >= 400) {
+            throw new Error(`HTTP Error ${response_status_number} when navigating to ${current_page_url_string}`);
+        }
+
+        // Ensure the page has basic structure before continuing
         await this.page.waitForLoadState('domcontentloaded');
     }
 

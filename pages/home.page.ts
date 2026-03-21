@@ -28,7 +28,14 @@ export class HomePage extends BasePage {
         await this.navigate_to('/');
         // Wait for the main search container to be visible as a signal the page is ready
         const search_filters_container = this.page.locator('#search-filters');
-        await search_filters_container.waitFor({ state: 'visible', timeout: 30000 });
+        try {
+            await search_filters_container.waitFor({ state: 'visible', timeout: 30000 });
+        } catch (error_object) {
+            const current_page_html_content = await this.page.content();
+            console.error(`ERROR: Element "#search-filters" not found after 30s! Current URL: ${this.page.url()}`);
+            console.error(`Page content preview: ${current_page_html_content.substring(0, 1000)}...`);
+            throw error_object;
+        }
     }
 
     async fill_auto_quote_form_with_details(vin_number_string: string, vehicle_mileage_string: string, state_name_string: string): Promise<void> {

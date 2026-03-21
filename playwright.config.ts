@@ -21,6 +21,10 @@ export default defineConfig({
         trace: 'on-first-retry',
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
+        // Use a real user agent to decrease likelihood of bot detection
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        navigationTimeout: 45000,
+        actionTimeout: 15000,
     },
     projects: [
         {
