@@ -92,7 +92,7 @@ export class CheckoutPage extends BasePage {
      async click_confirm_payment_button(): Promise<void> {
         const confirm_button_locator = this.page.getByTestId('hosted-payment-submit-button').or(
             this.page.locator('xpath=//*[@id="payment-form"]/div/div/div/div[3]/div/div[2]/div/button/div[3]')
-        );
+        ).first();
         await confirm_button_locator.waitFor({ state: 'visible', timeout: 30000 });
         await confirm_button_locator.click();
     }
