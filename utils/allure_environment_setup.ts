@@ -35,6 +35,22 @@ async function generate_allure_environment_properties_file_execution(): Promise<
     );
 
     console.log(`Allure environment properties file generated at: ${environment_properties_file_destination_path_string}`);
+
+    // Manage history trends by copying from the previous report to the current results
+    const previous_allure_report_history_directory_absolute_path_string = path.resolve(process.cwd(), 'allure-report', 'history');
+    const current_allure_results_history_directory_absolute_path_string = path.join(allure_results_directory_path_string, 'history');
+
+    if (fs.existsSync(previous_allure_report_history_directory_absolute_path_string)) {
+        try {
+            // Using standard fs.cpSync (Node.js 16.7.0+) for recursive copy
+            fs.cpSync(previous_allure_report_history_directory_absolute_path_string, current_allure_results_history_directory_absolute_path_string, { recursive: true, force: true });
+            console.log(`Inherited Allure history trend data from: ${previous_allure_report_history_directory_absolute_path_string}`);
+        } catch (history_cloning_error_object) {
+            console.warn(`NOTICE: Could not copy Allure history data. Error: ${history_cloning_error_object instanceof Error ? history_cloning_error_object.message : String(history_cloning_error_object)}`);
+        }
+    } else {
+        console.log('No previous Allure history found, skipping trend inheritance.');
+    }
 }
 
 export default generate_allure_environment_properties_file_execution;
