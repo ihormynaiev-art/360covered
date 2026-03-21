@@ -1,7 +1,7 @@
 import { test, expect } from 'fixtures/app.fixture';
 import { BASE_URL } from 'utils/env.helper';
 
-test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
+test.describe('Home Page - Auto Quote Form @ui @smoke @regression', () => {
 
     test.beforeEach(async ({ homePage }) => {
         // Increase the overall test timeout for this block
