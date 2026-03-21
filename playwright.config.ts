@@ -6,6 +6,7 @@ const ENVIRONMENT = process.env.ENV || 'dev';
 dotenv.config({ path: path.resolve(__dirname, 'config', `.env.${ENVIRONMENT}`) });
 
 export default defineConfig({
+    globalSetup: require.resolve('./utils/allure_environment_setup.ts'),
     testDir: './tests',
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
