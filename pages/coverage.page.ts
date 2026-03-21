@@ -10,46 +10,46 @@ export class CoveragePage extends BasePage {
      * Gets the plan block that contains the specified title and provider.
      * Uses ID if provider and title are given to be highly precise.
      */
-    getPlanBlock(planTitle: string, providerName?: string): Locator {
-        if (providerName && planTitle) {
-            const planId = planTitle.toLowerCase().replace(/\s+/g, '_');
-            const providerId = providerName.toLowerCase().replace(/\s+/g, '_');
-            const cardId = `plan-card-${providerId}-${planId}`;
+    get_coverage_plan_block_locator(plan_title_string: string, provider_name_string?: string): Locator {
+        if (provider_name_string && plan_title_string) {
+            const plan_identifier_string = plan_title_string.toLowerCase().replace(/\s+/g, '_');
+            const provider_identifier_string = provider_name_string.toLowerCase().replace(/\s+/g, '_');
+            const plan_card_id_string = `plan-card-${provider_identifier_string}-${plan_identifier_string}`;
             
             // Try to find by the ID structure if it exists
-            const cardLocator = this.page.locator(`[id="${cardId}"], [id*="${cardId}"]`);
-            return cardLocator.first();
+            const plan_card_locator = this.page.locator(`[id="${plan_card_id_string}"], [id*="${plan_card_id_string}"]`);
+            return plan_card_locator.first();
         }
 
         // Fallback to text filtering if ID is not workable
         return this.page.locator('div').filter({
-            has: this.page.locator('h3', { hasText: new RegExp(`^${planTitle}$`, 'i') })
+            has: this.page.locator('h3', { hasText: new RegExp(`^${plan_title_string}$`, 'i') })
         }).first();
     }
 
     /**
      * Clicks "View Plan Details" button in the specified plan block.
      */
-    async viewPlanDetails(planTitle: string, providerName?: string): Promise<void> {
-        const planBlockLocator = this.getPlanBlock(planTitle, providerName);
-        await planBlockLocator.waitFor({ state: 'visible', timeout: 30000 });
+    async view_coverage_plan_details(plan_title_string: string, provider_name_string?: string): Promise<void> {
+        const plan_block_locator = this.get_coverage_plan_block_locator(plan_title_string, provider_name_string);
+        await plan_block_locator.waitFor({ state: 'visible', timeout: 30000 });
         
-        const detailsButtonLocator = planBlockLocator.getByRole('button', { name: 'View Plan Details' });
-        await detailsButtonLocator.scrollIntoViewIfNeeded();
-        await detailsButtonLocator.click();
+        const details_button_locator = plan_block_locator.getByRole('button', { name: 'View Plan Details' });
+        await details_button_locator.scrollIntoViewIfNeeded();
+        await details_button_locator.click();
         
         // Wait for the modal to appear
-        const planDetailsModal = this.page.getByRole('dialog');
-        await expect(planDetailsModal).toBeVisible({ timeout: 15000 });
+        const plan_details_dialog_modal = this.page.getByRole('dialog');
+        await expect(plan_details_dialog_modal).toBeVisible({ timeout: 15000 });
     }
 
     /**
      * Clicks the "Select This Plan" button in the open modal.
      */
-    async selectPlan(): Promise<void> {
-        const selectPlanButton = this.page.getByRole('button', { name: 'Select This Plan' });
-        await selectPlanButton.waitFor({ state: 'visible', timeout: 10000 });
-        await selectPlanButton.click();
+    async select_chosen_coverage_plan(): Promise<void> {
+        const select_plan_button_locator = this.page.getByRole('button', { name: 'Select This Plan' });
+        await select_plan_button_locator.waitFor({ state: 'visible', timeout: 10000 });
+        await select_plan_button_locator.click();
         
         // Wait for potential navigation or modal close
         await this.page.waitForLoadState('networkidle');

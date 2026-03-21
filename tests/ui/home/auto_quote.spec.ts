@@ -6,45 +6,45 @@ test.describe('Home Page - Auto Quote Form @ui @smoke', () => {
     test.beforeEach(async ({ homePage }) => {
         // Increase the overall test timeout for this block
         test.setTimeout(90000);
-        await homePage.navigateToHomePage();
+        await homePage.navigate_to_home_page();
     });
 
     test('should submit auto quote form and proceed in chat', async ({ homePage, chatPage, coveragePage, checkoutPage }) => {
-        const USER_VIN = '3GNAXHEV2JL379307';
-        const USER_MILEAGE = '40000';
-        const USER_STATE = 'FL';
+        const USER_VIN_NUMBER = '3GNAXHEV2JL379307';
+        const USER_VEHICLE_MILEAGE = '40000';
+        const USER_STATE_NAME = 'FL';
 
-        await homePage.fillAutoQuoteForm(USER_VIN, USER_MILEAGE, USER_STATE);
+        await homePage.fill_auto_quote_form_with_details(USER_VIN_NUMBER, USER_VEHICLE_MILEAGE, USER_STATE_NAME);
 
         // Interact with the first chat question (Mileage)
-        await chatPage.answerChatQuestion('miles do you drive per year?', '20K+');
+        await chatPage.answer_chat_question_by_selecting_option('miles do you drive per year?', '20K+');
 
         // Interact with the second chat question (Usage)
-        await chatPage.answerChatQuestion('personal use?', 'Personal');
+        await chatPage.answer_chat_question_by_selecting_option('personal use?', 'Personal');
 
         // Select the POWERTRAIN plan from Provider A
-        await coveragePage.viewPlanDetails('POWERTRAIN', 'Provider A');
+        await coveragePage.view_coverage_plan_details('POWERTRAIN', 'Provider A');
 
         // Click "Select This Plan" in the modal
-        await coveragePage.selectPlan();
+        await coveragePage.select_chosen_coverage_plan();
 
         // Final step: Continue to checkout
-        await checkoutPage.continueToCheckout();
+        await checkoutPage.continue_to_checkout();
 
         // Fill customer information
-        await checkoutPage.fillCustomerInformation({
-            firstName: 'Test',
-            lastName: 'QA',
-            email: 'ihor.mynaiev@greenice.net',
-            phone: '01234567890',
-            streetAddress: '123 Main St',
-            city: 'Miami',
-            state: 'FL',
-            zipCode: '33101'
+        await checkoutPage.fill_customer_information_form({
+            first_name_string: 'Test',
+            last_name_string: 'QA',
+            email_address_string: 'ihor.mynaiev@greenice.net',
+            phone_number_string: '01234567890',
+            street_address_string: '123 Main St',
+            city_name_string: 'Miami',
+            state_code_string: 'FL',
+            zip_code_string: '33101'
         });
 
         // Click "Complete Purchase"
-        await checkoutPage.completePurchase();
+        await checkoutPage.complete_purchase_process();
 
         // Fill payment information
         await checkoutPage.fill_payment_method_details({

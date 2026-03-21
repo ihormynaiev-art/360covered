@@ -9,36 +9,36 @@ export class CheckoutPage extends BasePage {
     /**
      * Clicks the "Continue to Checkout" button.
      */
-    async continueToCheckout(): Promise<void> {
-        const continueButton = this.page.getByRole('button', { name: 'Continue to Checkout' });
-        await continueButton.waitFor({ state: 'visible', timeout: 30000 });
-        await continueButton.click();
+    async continue_to_checkout(): Promise<void> {
+        const continue_to_checkout_button = this.page.getByRole('button', { name: 'Continue to Checkout' });
+        await continue_to_checkout_button.waitFor({ state: 'visible', timeout: 30000 });
+        await continue_to_checkout_button.click();
         
-        // Wait for potential navigation
+        // Wait for potential navigation or response
         await this.page.waitForLoadState('networkidle');
     }
 
     /**
      * Fills the customer information form with the provided data.
      */
-    async fillCustomerInformation(data: {
-        firstName: string,
-        lastName: string,
-        email: string,
-        phone: string,
-        streetAddress: string,
-        city: string,
-        state: string,
-        zipCode: string
+    async fill_customer_information_form(customer_form_input_data: {
+        first_name_string: string,
+        last_name_string: string,
+        email_address_string: string,
+        phone_number_string: string,
+        street_address_string: string,
+        city_name_string: string,
+        state_code_string: string,
+        zip_code_string: string
     }): Promise<void> {
-        await this.page.getByLabel('First Name').fill(data.firstName);
-        await this.page.getByLabel('Last Name').fill(data.lastName);
-        await this.page.getByLabel('Email').fill(data.email);
-        await this.page.getByLabel('Phone').fill(data.phone);
-        await this.page.getByLabel('Street Address').fill(data.streetAddress);
-        await this.page.getByLabel('City').fill(data.city);
-        await this.page.getByLabel('State').fill(data.state);
-        await this.page.getByLabel('ZIP Code').fill(data.zipCode);
+        await this.page.getByLabel('First Name').fill(customer_form_input_data.first_name_string);
+        await this.page.getByLabel('Last Name').fill(customer_form_input_data.last_name_string);
+        await this.page.getByLabel('Email').fill(customer_form_input_data.email_address_string);
+        await this.page.getByLabel('Phone').fill(customer_form_input_data.phone_number_string);
+        await this.page.getByLabel('Street Address').fill(customer_form_input_data.street_address_string);
+        await this.page.getByLabel('City').fill(customer_form_input_data.city_name_string);
+        await this.page.getByLabel('State').fill(customer_form_input_data.state_code_string);
+        await this.page.getByLabel('ZIP Code').fill(customer_form_input_data.zip_code_string);
     }
 
     /**
@@ -109,10 +109,10 @@ export class CheckoutPage extends BasePage {
     /**
      * Clicks the "Complete Purchase" button.
      */
-    async completePurchase(): Promise<void> {
-        const completeButton = this.page.getByRole('button', { name: 'Complete Purchase' });
-        await completeButton.waitFor({ state: 'visible', timeout: 30000 });
-        await completeButton.click();
+    async complete_purchase_process(): Promise<void> {
+        const complete_purchase_button = this.page.getByRole('button', { name: 'Complete Purchase' });
+        await complete_purchase_button.waitFor({ state: 'visible', timeout: 30000 });
+        await complete_purchase_button.click();
         
         // Wait for final navigation or success state
         await this.page.waitForLoadState('networkidle');
