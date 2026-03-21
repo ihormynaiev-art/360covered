@@ -26,15 +26,18 @@ export class HomePage extends BasePage {
 
     async navigate_to_home_page(): Promise<void> {
         await this.navigate_to('/');
+        
         // Wait for the main search container to be visible as a signal the page is ready
-        const search_filters_container = this.page.locator('#search-filters');
+        // We use OR logic to be more resilient (either the ID or any specific field)
+        const search_filters_container_locator = this.page.locator('#search-filters').or(this.vinInput);
+        
         try {
-            await search_filters_container.waitFor({ state: 'visible', timeout: 30000 });
+            await search_filters_container_locator.first().waitFor({ state: 'visible', timeout: 30000 });
         } catch (error_object) {
             const current_page_html_content = await this.page.content();
-            console.error(`ERROR: Element "#search-filters" not found after 30s! Current URL: ${this.page.url()}`);
-            console.error(`Page content preview: ${current_page_html_content.substring(0, 1000)}...`);
-            throw error_object;
+            console.error(`ERROR: Element "#search-filters" or VIN input not found! Current URL: ${this.page.url()}`);
+            console.error(`Page content preview (first 2048 chars): ${current_page_html_content.substring(0, 2048)}`);
+            throw new Error(`Home page search form not loaded properly at ${this.page.url()}. Check CI logging or screenshots.`);
         }
     }
 
