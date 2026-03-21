@@ -90,7 +90,9 @@ export class CheckoutPage extends BasePage {
      * Clicks the final payment confirmation button.
      */
      async click_confirm_payment_button(): Promise<void> {
-        const confirm_button_locator = this.page.locator('xpath=//*[@id="payment-form"]/div/div/div/div[3]/div/div[2]/div/button/div[3]');
+        const confirm_button_locator = this.page.getByTestId('hosted-payment-submit-button').or(
+            this.page.locator('xpath=//*[@id="payment-form"]/div/div/div/div[3]/div/div[2]/div/button/div[3]')
+        );
         await confirm_button_locator.waitFor({ state: 'visible', timeout: 30000 });
         await confirm_button_locator.click();
     }
@@ -112,5 +114,14 @@ export class CheckoutPage extends BasePage {
         await complete_purchase_button.click();
         
         await this.page.waitForLoadState('load');
+    }
+
+    /**
+     * Selects a financing plan if available.
+     */
+    async select_financing_payment_plan(finance_plan_option_name_string: string): Promise<void> {
+        const finance_plan_button_locator = this.page.getByRole('button', { name: finance_plan_option_name_string });
+        await finance_plan_button_locator.waitFor({ state: 'visible', timeout: 15000 });
+        await finance_plan_button_locator.click();
     }
 }
