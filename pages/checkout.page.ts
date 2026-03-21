@@ -85,23 +85,22 @@ export class CheckoutPage extends BasePage {
     /**
      * Clicks the final payment confirmation button.
      */
-    async click_confirm_payment_button(): Promise<void> {
+     async click_confirm_payment_button(): Promise<void> {
         const confirm_button_locator = this.page.locator('xpath=//*[@id="payment-form"]/div/div/div/div[3]/div/div[2]/div/button/div[3]');
         await confirm_button_locator.waitFor({ state: 'visible', timeout: 30000 });
+        
+        const payment_page_url_before_click_string = this.page.url();
         await confirm_button_locator.click();
         
-        await this.page.waitForURL(/.*/, { timeout: 45000 });
+        await this.page.waitForURL((current_url_object) => current_url_object.toString() !== payment_page_url_before_click_string, { timeout: 60000 });
         await this.page.waitForLoadState('load');
     }
 
-    /**
-     * Verifies that the successful purchase confirmation message is visible.
-     */
     async verify_successful_purchase_confirmation(): Promise<void> {
         const success_title_locator = this.page.getByText(/You[''\u2019]re Covered!/);
         const success_description_locator = this.page.getByText('Your vehicle protection is now active');
         
-        await success_title_locator.waitFor({ state: 'visible', timeout: 30000 });
+        await success_title_locator.waitFor({ state: 'visible', timeout: 60000 });
         await success_description_locator.waitFor({ state: 'visible', timeout: 10000 });
     }
 
