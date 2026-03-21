@@ -15,6 +15,18 @@ on:
                 default: 'dev'
                 type: choice
                 options: [dev, stage, prod]
+            test_suite:
+                description: 'Choose test suite to run'
+                required: true
+                default: '@smoke'
+                type: choice
+                options: ['@smoke', '@regression', '@ui', '@api', 'all']
+            browser:
+                description: 'Choose browser'
+                required: true
+                default: 'chromium'
+                type: choice
+                options: [chromium, firefox, webkit, all]
 
 permissions:
     contents: write
@@ -41,7 +53,14 @@ jobs:
               run: npx playwright install --with-deps
 
             - name: Run Playwright tests
-              run: npx playwright test
+              run: |
+                  TAG_VALUE="${{ github.event.inputs.test_suite || 'all' }}"
+                  BROWSER_VALUE="${{ github.event.inputs.browser || 'all' }}"
+                  COMMAND_OPTIONS_STRING=""
+                  if [ "$TAG_VALUE" != "all" ]; then COMMAND_OPTIONS_STRING="$COMMAND_OPTIONS_STRING --grep $TAG_VALUE"; fi
+                  if [ "$BROWSER_VALUE" != "all" ]; then COMMAND_OPTIONS_STRING="$COMMAND_OPTIONS_STRING --project=$BROWSER_VALUE"; fi
+                  echo "Executing command: npx playwright test $COMMAND_OPTIONS_STRING"
+                  npx playwright test $COMMAND_OPTIONS_STRING
               env:
                   ENV: ${{ github.event.inputs.environment || 'dev' }}
               continue-on-error: true
