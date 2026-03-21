@@ -76,10 +76,16 @@ export class CheckoutPage extends BasePage {
         await country_dropdown_locator.waitFor({ state: 'visible', timeout: 5000 });
         await country_dropdown_locator.selectOption({ label: payment_method_details_input.country_or_region_text });
 
-        // Find and fill Billing ZIP Code
         const billing_zip_code_locator = this.page.locator('#billingPostalCode').or(this.page.getByLabel(/ZIP Code/i).last());
         await billing_zip_code_locator.waitFor({ state: 'visible', timeout: 5000 });
         await billing_zip_code_locator.fill(payment_method_details_input.billing_zip_code_text);
+
+        const save_payment_info_checkbox_locator = this.page.getByLabel(/Save my information/i);
+        if (await save_payment_info_checkbox_locator.isVisible({ timeout: 3000 }).catch(() => false)) {
+            if (await save_payment_info_checkbox_locator.isChecked()) {
+                await save_payment_info_checkbox_locator.uncheck();
+            }
+        }
     }
 
     /**
