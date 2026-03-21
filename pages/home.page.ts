@@ -74,6 +74,9 @@ export class HomePage extends BasePage {
         ).first();
         await state_selection_option_locator.click();
 
+        // Brief pause for WebKit to properly process the dropdown selection state before submitting
+        await this.page.waitForTimeout(500);
+
         await this.click_element_locator(this.confirm_details_submit_button_locator);
 
         // Handle the Welcome Back modal if it appears
@@ -99,6 +102,9 @@ export class HomePage extends BasePage {
         ).first();
 
         await state_selection_option_locator.click();
+
+        // Brief pause for WebKit to properly process the dropdown selection state before submitting
+        await this.page.waitForTimeout(500);
 
         await this.click_element_locator(this.get_instant_quote_submit_button_locator);
 
