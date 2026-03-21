@@ -88,12 +88,7 @@ export class CheckoutPage extends BasePage {
      async click_confirm_payment_button(): Promise<void> {
         const confirm_button_locator = this.page.locator('xpath=//*[@id="payment-form"]/div/div/div/div[3]/div/div[2]/div/button/div[3]');
         await confirm_button_locator.waitFor({ state: 'visible', timeout: 30000 });
-        
-        const payment_page_url_before_click_string = this.page.url();
         await confirm_button_locator.click();
-        
-        await this.page.waitForURL((current_url_object) => current_url_object.toString() !== payment_page_url_before_click_string, { timeout: 60000 });
-        await this.page.waitForLoadState('load');
     }
 
     async verify_successful_purchase_confirmation(): Promise<void> {
