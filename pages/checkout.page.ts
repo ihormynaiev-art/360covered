@@ -14,8 +14,7 @@ export class CheckoutPage extends BasePage {
         await continue_to_checkout_button.waitFor({ state: 'visible', timeout: 30000 });
         await continue_to_checkout_button.click();
         
-        // Wait for potential navigation or response
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('load');
     }
 
     /**
@@ -91,8 +90,8 @@ export class CheckoutPage extends BasePage {
         await confirm_button_locator.waitFor({ state: 'visible', timeout: 30000 });
         await confirm_button_locator.click();
         
-        // Wait for final network activity to settle
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForURL(/.*/, { timeout: 45000 });
+        await this.page.waitForLoadState('load');
     }
 
     /**
@@ -114,7 +113,6 @@ export class CheckoutPage extends BasePage {
         await complete_purchase_button.waitFor({ state: 'visible', timeout: 30000 });
         await complete_purchase_button.click();
         
-        // Wait for final navigation or success state
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('load');
     }
 }

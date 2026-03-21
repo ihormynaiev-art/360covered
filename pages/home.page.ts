@@ -63,7 +63,7 @@ export class HomePage extends BasePage {
         try {
             await this.start_new_quote_modal_button_locator.waitFor({ state: 'visible', timeout: 10000 });
             await this.click_element_locator(this.start_new_quote_modal_button_locator);
-            await this.page.waitForLoadState('networkidle');
+            await this.page.waitForLoadState('load');
         } catch (modal_not_found_error) {
             console.log('Welcome modal was not displayed, continuing flow.');
         }

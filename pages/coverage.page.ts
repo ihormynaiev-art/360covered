@@ -51,7 +51,6 @@ export class CoveragePage extends BasePage {
         await select_plan_button_locator.waitFor({ state: 'visible', timeout: 10000 });
         await select_plan_button_locator.click();
         
-        // Wait for potential navigation or modal close
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('load');
     }
 }
