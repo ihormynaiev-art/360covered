@@ -8,10 +8,13 @@ import * as path from 'path';
 async function generate_allure_environment_properties_file_execution(): Promise<void> {
     const allure_results_directory_path_string = path.resolve(process.cwd(), 'allure-results');
 
-    // Ensure the results directory exists before writing the properties file
-    if (!fs.existsSync(allure_results_directory_path_string)) {
-        fs.mkdirSync(allure_results_directory_path_string, { recursive: true });
+    // Clean previous results to avoid accumulating tests from old runs
+    if (fs.existsSync(allure_results_directory_path_string)) {
+        fs.rmSync(allure_results_directory_path_string, { recursive: true, force: true });
     }
+
+    // Ensure the results directory exists before writing the properties file
+    fs.mkdirSync(allure_results_directory_path_string, { recursive: true });
 
     const test_environment_name_string = process.env.ENV || 'dev';
     const base_url_string = process.env.BASE_URL || 'https://dev.get360covered.com/';
