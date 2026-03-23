@@ -10,6 +10,10 @@ test.describe('Home Page - Auto Quote Form @ui @smoke @regression', () => {
     });
 
     test('should submit auto quote form and proceed in chat', async ({ homePage, chatPage, coveragePage, checkoutPage }) => {
+        test.info().annotations.push({ type: 'epic', description: 'Core Workflows' });
+        test.info().annotations.push({ type: 'feature', description: 'Auto Quote' });
+        test.info().annotations.push({ type: 'story', description: 'Submit Auto Quote Request' });
+
         const USER_VIN_NUMBER = '3GNAXHEV2JL379307';
         const USER_VEHICLE_MILEAGE = '40000';
         const USER_STATE_NAME = 'FL';

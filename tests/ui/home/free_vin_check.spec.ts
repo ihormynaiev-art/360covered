@@ -9,6 +9,10 @@ test.describe('Home Page - Free VIN Check Flow @ui @smoke @regression', () => {
     });
 
     test('should perform free vin check and complete purchase with financing', async ({ homePage, chatPage, coveragePage, checkoutPage }) => {
+        test.info().annotations.push({ type: 'epic', description: 'Core Workflows' });
+        test.info().annotations.push({ type: 'feature', description: 'Free VIN Check' });
+        test.info().annotations.push({ type: 'story', description: 'Perform Check and Purchase Plan' });
+
         const USER_VIN_NUMBER_STRING = '3GNAXHEV2JL379307';
         const USER_VEHICLE_MILEAGE_STRING = '40000';
         const USER_STATE_NAME_STRING = 'FL';
