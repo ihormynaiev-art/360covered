@@ -39,6 +39,27 @@ async function generate_allure_environment_properties_file_execution(): Promise<
 
     console.log(`Allure environment properties file generated at: ${environment_properties_file_destination_path_string}`);
 
+    // Generate executor.json to populate the "Executors" section in Allure
+    const executor_json_file_destination_path_string = path.join(allure_results_directory_path_string, 'executor.json');
+    if (process.env.CI) {
+        const executor_json_content_object = {
+            "name": "GitHub Actions",
+            "type": "github",
+            "url": `${process.env.GITHUB_SERVER_URL || 'https://github.com'}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
+            "buildOrder": process.env.GITHUB_RUN_NUMBER,
+            "buildName": `GitHub Actions Run #${process.env.GITHUB_RUN_NUMBER}`,
+            "buildUrl": `${process.env.GITHUB_SERVER_URL || 'https://github.com'}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+        };
+        fs.writeFileSync(executor_json_file_destination_path_string, JSON.stringify(executor_json_content_object, null, 2));
+    } else {
+        const executor_json_content_object = {
+            "name": "Local Environment",
+            "type": "local",
+            "buildName": "Local Playwright Run"
+        };
+        fs.writeFileSync(executor_json_file_destination_path_string, JSON.stringify(executor_json_content_object, null, 2));
+    }
+
     // Manage history trends by copying from the previous report to the current results
     const previous_allure_report_history_directory_absolute_path_string = path.resolve(process.cwd(), 'allure-report', 'history');
     const current_allure_results_history_directory_absolute_path_string = path.join(allure_results_directory_path_string, 'history');
