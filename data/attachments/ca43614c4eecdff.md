@@ -1,0 +1,87 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - alert [ref=e2]: Get Your Vehicle Warranty Quote | Instant Coverage
+  - generic [ref=e8]:
+    - banner [ref=e9]:
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - button [ref=e13] [cursor=pointer]:
+            - img [ref=e14]
+          - generic [ref=e16]:
+            - heading "Your Coverage Options" [level=1] [ref=e17]
+            - generic [ref=e18]:
+              - img [ref=e19]
+              - generic [ref=e23]: 2018 Chevrolet Equinox
+              - generic [ref=e24]: •
+              - generic [ref=e25]: 0 plans found
+        - button "Change Vehicle" [ref=e27] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - heading "Select Your Coverage" [level=2] [ref=e31]
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]:
+              - heading "Price / Month" [level=3] [ref=e35]
+              - generic [ref=e36]: $0 - $600
+            - generic [ref=e37]:
+              - slider "Minimum" [ref=e41]
+              - slider "Maximum" [ref=e43]
+          - generic [ref=e44]:
+            - generic [ref=e45]:
+              - heading "Term Length" [level=3] [ref=e46]
+              - generic [ref=e47]: 12 - 120 Months
+            - generic [ref=e48]:
+              - slider "Minimum" [ref=e52]
+              - slider "Maximum" [ref=e54]
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - heading "Mileage" [level=3] [ref=e57]
+              - generic [ref=e58]: 0 – Unlimited
+            - generic [ref=e59]:
+              - slider "Minimum" [ref=e63]
+              - slider "Maximum" [ref=e65]
+          - generic [ref=e66]:
+            - heading "Coverage Level" [level=3] [ref=e67]
+            - group [ref=e68]:
+              - button "Good" [ref=e69]
+              - button "Better" [ref=e70]
+              - button "Best" [ref=e71]
+          - generic [ref=e72]:
+            - heading "Provider" [level=3] [ref=e73]
+            - combobox [ref=e74]:
+              - generic: All Providers
+              - img
+          - generic [ref=e75]:
+            - heading "Sort By" [level=3] [ref=e76]
+            - combobox [ref=e77]:
+              - generic: Default
+              - img
+          - generic [ref=e78]:
+            - heading "Billing Cycle" [level=3] [ref=e79]
+            - group [ref=e80]:
+              - button "Monthly" [ref=e81]
+              - button "Full Price" [ref=e82]
+      - main [ref=e83]:
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - heading "No Plans Available" [level=2] [ref=e86]
+            - generic [ref=e87]:
+              - paragraph [ref=e88]: There are currently no coverage plans available for this vehicle based on provider eligibility rules.
+              - generic [ref=e89]:
+                - img [ref=e90]
+                - paragraph [ref=e92]: Our network continues to grow — feel free to check back in the future.
+            - button "Start New Quote" [ref=e94] [cursor=pointer]
+          - generic [ref=e95]:
+            - img [ref=e96]
+            - generic [ref=e100]: 2018 Chevrolet Equinox
+  - button "1" [ref=e102] [cursor=pointer]:
+    - img [ref=e103]
+    - generic [ref=e106]: "1"
+  - region "Notifications (F8)":
+    - list
+  - button "Restart Quote Flow" [ref=e107] [cursor=pointer]:
+    - img [ref=e108]
+    - generic [ref=e113]: Restart Quote Flow
+```
