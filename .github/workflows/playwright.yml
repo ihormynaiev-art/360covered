@@ -60,11 +60,13 @@ jobs:
               run: |
                   TAG_VALUE="${{ github.event.inputs.test_suite || 'all' }}"
                   BROWSER_VALUE="${{ github.event.inputs.browser || 'all' }}"
-                  COMMAND_OPTIONS_STRING=""
-                  if [ "$TAG_VALUE" != "all" ]; then COMMAND_OPTIONS_STRING="$COMMAND_OPTIONS_STRING --grep $TAG_VALUE"; fi
-                  if [ "$BROWSER_VALUE" != "all" ]; then COMMAND_OPTIONS_STRING="$COMMAND_OPTIONS_STRING --project=$BROWSER_VALUE"; fi
-                  echo "Executing command: npx playwright test $COMMAND_OPTIONS_STRING"
-                  npx playwright test $COMMAND_OPTIONS_STRING
+                  
+                  ARGS=""
+                  if [ "$TAG_VALUE" != "all" ]; then ARGS="$ARGS --grep \"$TAG_VALUE\""; fi
+                  if [ "$BROWSER_VALUE" != "all" ]; then ARGS="$ARGS --project=\"$BROWSER_VALUE\""; fi
+                  
+                  echo "🚀 Executing: npx playwright test $ARGS"
+                  npx playwright test $ARGS
               env:
                   ENV: ${{ github.event.inputs.environment || 'dev' }}
               continue-on-error: true
