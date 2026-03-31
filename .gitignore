@@ -2,8 +2,12 @@ node_modules/
 dist/
 
 # Environment
+.env
+.env.txt
 config/.env.*
 !config/.env.example
+
+.venv/
 
 # Test results and reports
 allure-results/

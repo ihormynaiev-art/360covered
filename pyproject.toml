@@ -1,0 +1,15 @@
+[project]
+name = "automation-bot"
+version = "0.1.0"
+description = "Telegram Bot for running Playwright tests remotely"
+dependencies = [
+    "python-telegram-bot",
+    "requests",
+    "python-dotenv",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pylint",
+    "black",
+]
