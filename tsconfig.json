@@ -14,10 +14,15 @@
     "baseUrl": ".",
     "paths": {
       "pages/*": ["pages/*"],
+      "@pages/*": ["pages/*"],
       "api/*": ["api/*"],
+      "@api/*": ["api/*"],
       "fixtures/*": ["fixtures/*"],
+      "@fixtures/*": ["fixtures/*"],
       "utils/*": ["utils/*"],
-      "test-data/*": ["test-data/*"]
+      "@utils/*": ["utils/*"],
+      "test-data/*": ["test-data/*"],
+      "@test-data/*": ["test-data/*"]
     }
   },
   "include": [
