@@ -11,7 +11,7 @@ class GitHubWorkflowController:
         self.github_access_token = github_access_token
         self.base_url = f"https://api.github.com/repos/{self.repository_owner}/{self.repository_name}"
 
-    def trigger_test_workflow(self, test_suite: str, environment: str = "dev", browser: str = "chromium") -> bool:
+    def trigger_test_workflow(self, test_suite: str, environment: str = "dev", browser: str = "chromium", telegram_chat_id: str = "") -> bool:
         """
         Triggers a workflow dispatch event for Playwright tests.
         """
@@ -28,7 +28,8 @@ class GitHubWorkflowController:
             "inputs": {
                 "test_suite": test_suite,
                 "environment": environment,
-                "browser": browser
+                "browser": browser,
+                "telegram_chat_id": str(telegram_chat_id)
             }
         }
         

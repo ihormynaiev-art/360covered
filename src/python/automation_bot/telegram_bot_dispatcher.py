@@ -79,12 +79,16 @@ class TelegramBotDispatcher:
 
     async def _initiate_test_task(self, update: Update, context: ContextTypes.DEFAULT_TYPE, test_suite: str) -> None:
         target_reply = update.message if update.message else update.callback_query.message
+        current_chat_id = update.effective_chat.id
         
         try:
-            self.github_controller.trigger_test_workflow(test_suite=test_suite)
+            self.github_controller.trigger_test_workflow(
+                test_suite=test_suite, 
+                telegram_chat_id=current_chat_id
+            )
             success_ack = (
                 f"✅ <b> {test_suite} tests started!</b>\n\n"
-                "You can monitor progress in Allure Report."
+                "You will receive a notification here once the run is complete."
             )
             report_button = [[InlineKeyboardButton("📋 View Allure Report", url=self.report_url_base)]]
             await target_reply.reply_html(

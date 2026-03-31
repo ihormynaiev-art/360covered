@@ -27,6 +27,10 @@ on:
                 default: 'chromium'
                 type: choice
                 options: [chromium, firefox, webkit, all]
+            telegram_chat_id:
+                description: 'Telegram Chat ID for notifications'
+                required: false
+                default: ''
 
 permissions:
     contents: write
@@ -95,3 +99,13 @@ jobs:
                   name: allure-report
                   path: allure-report/
                   retention-days: 30
+
+            - name: Send Telegram Notification
+              if: always()
+              run: |
+                  CHAT_ID="${{ github.event.inputs.telegram_chat_id }}"
+                  if [ -n "$CHAT_ID" ]; then
+                    CONCLUSION="${{ job.status }}"
+                    MESSAGE="🏁 <b>Tests Complete!</b>%0AStatus: <b>$CONCLUSION</b>%0AEnvironment: <b>${{ github.event.inputs.environment }}</b>%0ASuite: <b>${{ github.event.inputs.test_suite }}</b>%0A%0A🔗 <a href='https://ihormynaiev-art.github.io/360covered/'>View Allure Report</a>"
+                    curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode=HTML
+                  fi
