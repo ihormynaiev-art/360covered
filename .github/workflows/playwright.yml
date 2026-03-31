@@ -58,28 +58,17 @@ jobs:
 
             - name: Run Playwright tests
               run: |
-                  # Extract inputs
                   TAG_VALUE="${{ github.event.inputs.test_suite || 'all' }}"
                   BROWSER_VALUE="${{ github.event.inputs.browser || 'all' }}"
                   ENVIRONMENT_VALUE="${{ github.event.inputs.environment || 'dev' }}"
                   
-                  echo "📋 --- RUN DIAGNOSTICS ---"
-                  echo "🔹 Environment: $ENVIRONMENT_VALUE"
-                  echo "🔹 Test Suite: $TAG_VALUE"
-                  echo "🔹 Browser: $BROWSER_VALUE"
-                  echo "🔹 Workspace: $(pwd)"
-                  echo "🔹 Files in tests directory:"
-                  ls -R tests/
+                  echo "📋 Starting tests with: Suite=$TAG_VALUE, Environment=$ENVIRONMENT_VALUE, Browser=$BROWSER_VALUE"
                   
                   ARGS=""
-                  if [ "$TAG_VALUE" != "all" ]; then ARGS="$ARGS --grep \"$TAG_VALUE\""; fi
-                  if [ "$BROWSER_VALUE" != "all" ]; then ARGS="$ARGS --project=\"$BROWSER_VALUE\""; fi
+                  if [ "$TAG_VALUE" != "all" ]; then ARGS="$ARGS --grep $TAG_VALUE"; fi
+                  if [ "$BROWSER_VALUE" != "all" ]; then ARGS="$ARGS --project=$BROWSER_VALUE"; fi
                   
-                  echo "🔍 --- PLAYWRIGHT DISCOVERY ---"
-                  npx playwright test $ARGS --list
-                  
-                  echo "🚀 --- EXECUTING TESTS ---"
-                  echo "Command: npx playwright test $ARGS"
+                  echo "🚀 Command: npx playwright test $ARGS"
                   npx playwright test $ARGS
               env:
                   ENV: ${{ github.event.inputs.environment || 'dev' }}
