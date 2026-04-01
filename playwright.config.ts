@@ -33,6 +33,10 @@ export default defineConfig({
         ignoreHTTPSErrors: true,
         navigationTimeout: 45000,
         actionTimeout: 15000,
+        httpCredentials: {
+            username: process.env.BASIC_AUTH_USERNAME || 'devadmin',
+            password: process.env.BASIC_AUTH_PASSWORD || 'SuperSecret123',
+        },
     },
     projects: [
         {
