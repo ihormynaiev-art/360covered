@@ -79,11 +79,6 @@ export class CheckoutPage extends BasePage {
         const billing_zip_code_locator = this.page.locator('#billingPostalCode').or(this.page.getByLabel(/ZIP Code/i).last());
         await billing_zip_code_locator.waitFor({ state: 'visible', timeout: 5000 });
         await billing_zip_code_locator.fill(payment_method_details_input.billing_zip_code_text);
-
-        const save_payment_info_label_locator = this.page.getByText(/Save my information/i);
-        if (await save_payment_info_label_locator.isVisible({ timeout: 3000 }).catch(() => false)) {
-            await save_payment_info_label_locator.click();
-        }
     }
 
     /**
