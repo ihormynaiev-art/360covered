@@ -84,6 +84,7 @@ class TelegramBotDispatcher:
         try:
             self.github_controller.trigger_test_workflow(
                 test_suite=test_suite, 
+                browser="all",
                 telegram_chat_id=current_chat_id
             )
             success_ack = (
