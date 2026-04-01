@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","254","should submit auto quote form and proceed in chat","chromium","2026-04-01","failed","2026-04-01","Home Page - Auto Quote Form @ui @smoke @regression","ui/home/auto_quote.spec.ts","",""
+"","559","should submit auto quote form and proceed in chat","webkit","2026-04-01","failed","2026-04-01","Home Page - Auto Quote Form @ui @smoke @regression","ui/home/auto_quote.spec.ts","",""
+"","1252","should perform free vin check and complete purchase with financing","firefox","2026-04-01","failed","2026-04-01","Home Page - Free VIN Check Flow @ui @smoke @regression","ui/home/free_vin_check.spec.ts","",""
+"","1230","should submit auto quote form and proceed in chat","firefox","2026-04-01","failed","2026-04-01","Home Page - Auto Quote Form @ui @smoke @regression","ui/home/auto_quote.spec.ts","",""
+"","552","should perform free vin check and complete purchase with financing","webkit","2026-04-01","failed","2026-04-01","Home Page - Free VIN Check Flow @ui @smoke @regression","ui/home/free_vin_check.spec.ts","",""
+"","278","should perform free vin check and complete purchase with financing","chromium","2026-04-01","failed","2026-04-01","Home Page - Free VIN Check Flow @ui @smoke @regression","ui/home/free_vin_check.spec.ts","",""
