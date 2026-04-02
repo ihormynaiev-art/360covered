@@ -1,0 +1,53 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - alert [ref=e2]: Get Your Vehicle Warranty Quote | Instant Coverage
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - link "360Covered logo" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "360Covered logo" [ref=e10]
+      - generic [ref=e11]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - heading "2018 Chevrolet Equinox" [level=3] [ref=e17]
+            - paragraph [ref=e18]: FWD 4dr LS w/1LS
+          - generic [ref=e19]:
+            - generic [ref=e20]:
+              - paragraph [ref=e21]: VIN
+              - paragraph [ref=e22]: 3GNAXHEV2JL379307
+            - generic [ref=e23]:
+              - paragraph [ref=e24]: Mileage
+              - paragraph [ref=e25]: 40,000 miles
+            - generic [ref=e26]:
+              - paragraph [ref=e27]: State
+              - paragraph [ref=e28]: FL
+            - generic [ref=e29]:
+              - paragraph [ref=e30]: Body Type
+              - paragraph [ref=e31]: SUV
+        - paragraph [ref=e34]: Welcome! We’re reviewing coverage options for your 2018 Chevrolet Equinox and finding the best Vehicle Service Contract plans available for you. I’ll walk you through the options so you can compare coverage details with confidence.
+        - paragraph [ref=e37]: About how many miles do you drive per year?
+        - paragraph [ref=e40]: 20K+
+        - generic [ref=e42]:
+          - paragraph [ref=e43]: Will this vehicle be used mainly for personal use or business use?
+          - generic [ref=e44]:
+            - button "Personal" [ref=e45] [cursor=pointer]:
+              - text: Personal
+              - img [ref=e46]
+            - button "Business" [ref=e49] [cursor=pointer]:
+              - text: Business
+              - img [ref=e50]
+            - button "Both" [ref=e53] [cursor=pointer]:
+              - text: Both
+              - img [ref=e54]
+      - generic [ref=e59]:
+        - textbox "Ask a question..." [ref=e60]
+        - button [ref=e61] [cursor=pointer]:
+          - img [ref=e62]
+  - region "Notifications (F8)":
+    - list
+  - button "Restart Quote Flow" [ref=e65] [cursor=pointer]:
+    - img [ref=e66]
+    - generic [ref=e71]: Restart Quote Flow
+```
