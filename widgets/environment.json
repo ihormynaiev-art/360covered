@@ -1,1 +1,1 @@
-[{"values":["dev"],"name":"Environment"},{"values":["https://dev.get360covered.com/"],"name":"Base_URL"},{"values":["linux"],"name":"OS"},{"values":["v20.20.1"],"name":"Node_Version"},{"values":["1.50.0"],"name":"Playwright_Version"}]
+[{"values":["dev"],"name":"Environment"},{"values":["https://dev.get360covered.com/"],"name":"Base_URL"},{"values":["linux"],"name":"OS"},{"values":["v20.20.2"],"name":"Node_Version"},{"values":["1.50.0"],"name":"Playwright_Version"}]
