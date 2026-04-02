@@ -30,14 +30,15 @@ export class CheckoutPage extends BasePage {
         state_code_string: string,
         zip_code_string: string
     }): Promise<void> {
-        await this.page.getByLabel('First Name').fill(customer_form_input_data.first_name_string);
-        await this.page.getByLabel('Last Name').fill(customer_form_input_data.last_name_string);
-        await this.page.getByLabel('Email').fill(customer_form_input_data.email_address_string);
-        await this.page.getByLabel('Phone').fill(customer_form_input_data.phone_number_string);
-        await this.page.getByLabel('Street Address').fill(customer_form_input_data.street_address_string);
-        await this.page.getByLabel('City').fill(customer_form_input_data.city_name_string);
-        await this.page.getByLabel('State').fill(customer_form_input_data.state_code_string);
-        await this.page.getByLabel('ZIP Code').fill(customer_form_input_data.zip_code_string);
+        const customer_info_container = this.page.locator('#customer-information').or(this.page.locator('form').first());
+        await customer_info_container.getByLabel('First Name').fill(customer_form_input_data.first_name_string);
+        await customer_info_container.getByLabel('Last Name').fill(customer_form_input_data.last_name_string);
+        await customer_info_container.getByLabel('Email').fill(customer_form_input_data.email_address_string);
+        await customer_info_container.getByLabel('Phone').fill(customer_form_input_data.phone_number_string);
+        await customer_info_container.getByLabel('Street Address').fill(customer_form_input_data.street_address_string);
+        await customer_info_container.getByLabel('City').fill(customer_form_input_data.city_name_string);
+        await customer_info_container.getByLabel('State').fill(customer_form_input_data.state_code_string);
+        await customer_info_container.getByLabel('ZIP Code').fill(customer_form_input_data.zip_code_string);
     }
 
     /**
@@ -76,6 +77,18 @@ export class CheckoutPage extends BasePage {
         await country_dropdown_locator.waitFor({ state: 'visible', timeout: 5000 });
         await country_dropdown_locator.selectOption({ label: payment_method_details_input.country_or_region_text });
 
+        // Link might be triggered after filling card number or email.
+        // Ensure that Stripe Link "Save my information" checkbox is NOT checked,
+        // as it requires additional phone verification that is not part of this flow.
+        const save_info_checkbox = this.page.getByLabel(/Save my information for faster checkout/i);
+        if (await save_info_checkbox.isVisible()) {
+            const is_checked = await save_info_checkbox.isChecked();
+            if (is_checked) {
+                console.log('Stripe Link checkbox was checked - unchecking it.');
+                await save_info_checkbox.uncheck();
+            }
+        }
+
         const billing_zip_code_locator = this.page.locator('#billingPostalCode').or(this.page.getByLabel(/ZIP Code/i).last());
         await billing_zip_code_locator.waitFor({ state: 'visible', timeout: 5000 });
         await billing_zip_code_locator.fill(payment_method_details_input.billing_zip_code_text);
@@ -86,7 +99,9 @@ export class CheckoutPage extends BasePage {
      */
      async click_confirm_payment_button(): Promise<void> {
         const confirm_button_locator = this.page.getByTestId('hosted-payment-submit-button').or(
-            this.page.locator('xpath=//*[@id="payment-form"]/div/div/div/div[3]/div/div[2]/div/button/div[3]')
+            this.page.getByRole('button', { name: /Pay|Subscribe/i })
+        ).or(
+             this.page.locator('#payment-form button[type="submit"]')
         ).first();
         await confirm_button_locator.waitFor({ state: 'visible', timeout: 30000 });
         await confirm_button_locator.click();

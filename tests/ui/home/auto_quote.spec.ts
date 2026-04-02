@@ -40,7 +40,7 @@ test.describe('Home Page - Auto Quote Form @ui @smoke @regression', () => {
             first_name_string: 'Test',
             last_name_string: 'QA',
             email_address_string: 'ihor.mynaiev@greenice.net',
-            phone_number_string: '01234567890',
+            phone_number_string: '2015550123',
             street_address_string: '123 Main St',
             city_name_string: 'Miami',
             state_code_string: 'FL',
