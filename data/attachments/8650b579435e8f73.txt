@@ -1,0 +1,2 @@
+Navigated to: https://dev.get360covered.com/ | Status: 200
+Welcome modal was not displayed, continuing flow.
